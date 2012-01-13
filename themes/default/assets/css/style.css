@@ -35,7 +35,7 @@ ul {
 h1{ font-size: 2em; }
 h2{ font-size: 1.8em; }
 h3{ font-size: 1.6em; }
-h4{ font-size: 1.4em; }
+h4{ font-size: 1.3em; }
 h5{ font-size: 1.2em; }
 h6{ font-size: 1.1em; }
 
@@ -54,8 +54,9 @@ a:hover{
 }
 
 #class-list{
-	padding:1em;
-	width:20%;
+	min-height:400px;
+	padding:1em 1%;
+	width:23%;
 	float:left;
 }
 
@@ -74,9 +75,10 @@ a:hover{
 }
 
 #api {
-	padding:1em;
+	min-height:400px;
+	padding:1em 1%;
 	float:right;
-	width:74%;
+	width:73%;
 	line-height:1.6em;
 }
 
@@ -121,11 +123,25 @@ footer {
 	width:33.33%;
 }
 
+#toc, #constants, #properties {
+	margin-bottom:2em;
+}
+
+#methods > h2, #properties > h2, #constants > h2 {
+	padding-bottom:0.25em;
+	margin-bottom:0.5em;
+	border-bottom:2px solid #CCCCCC;
+}
+
 #methods > section {
 	margin-bottom:1em;
 	background-color:#EEEEFF;
 	border:2px solid #CCCCCC;
 	padding:1em;
+}
+
+.constant > h4, .property > h4, .method > h4 {
+	font-weight:normal;
 }
 
 .method > h4 {
@@ -135,6 +151,14 @@ footer {
     padding: 15px;
 }
 
+span.name {
+	font-weight:bold;
+}
+
 pre.source {
 	font-size: 13px;
+}
+
+small {
+	color:#007700;
 }
