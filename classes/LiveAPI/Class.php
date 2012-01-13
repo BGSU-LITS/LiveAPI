@@ -76,10 +76,13 @@ class LiveAPI_Class
 		}
 
 		$props = $this->class->getProperties();
+		$default = $this->class->getDefaultProperties();
+
 		usort($props, array($this, "_prop_sort"));
 		foreach ($props as $prop)
 		{
-			$this->properties[] = new LiveAPI_Property($class, $prop->name);
+			$default = isset($default[$prop->name]) ? $default[$prop->name] : null;
+			$this->properties[] = new LiveAPI_Property($class, $prop->name, $default);
 		}
 
 		$methods = $this->class->getMethods();

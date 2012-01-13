@@ -63,11 +63,10 @@
 
 	{{#properties}}
 	<section class="property">
-		<h4 id="property:{{name}}">{{get_modifiers}} <code>{{type}}</code> <span class="name">${{name}}</span></h4>
+		<h4 id="property:{{name}}">{{get_modifiers}} <code>{{type}}</code> <span class="name">${{name}}</span>{{#has_value}} = {{value}}{{/has_value}}</h4>
 		<div class="description">
 			{{{description}}}
 		</div>
-		<pre class="value">{{value}}</pre>
 	</section>
 	{{/properties}}
 </div>

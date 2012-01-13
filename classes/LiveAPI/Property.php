@@ -33,10 +33,11 @@ class LiveAPI_Property
 	/**
 	 * Creates a new Propery class
 	 *
-	 * @param type $class
-	 * @param ReflectionProperty $property 
+	 * @param string $class     The class name
+	 * @param string $property  The property name
+	 * @param mixed             The default value for the property
 	 */
-	public function __construct($class, $property)
+	public function __construct($class, $property, $value)
 	{
 		$property = new ReflectionProperty($class, $property);
 
@@ -59,27 +60,18 @@ class LiveAPI_Property
 		}
 
 		$this->property = $property;
-		
-		// Show the value of static properties, but only if they are public or we are php 5.3 or higher and can force them to be accessible
-		if ($property->isStatic() AND ($property->isPublic() OR version_compare(PHP_VERSION, '5.3', '>=')))
-		{
-			// Force the property to be accessible
-			if (version_compare(PHP_VERSION, '5.3', '>='))
-			{
-				$property->setAccessible(TRUE);
-			}
-			
-			// Don't debug the entire object, just say what kind of object it is
-			if (is_object($property->getValue($class)))
-			{
-				$this->value = '<object '.get_class($property->getValue($class)).'()';
-			}
-			else
-			{
-				$this->value = $property->getValue($class);
-			}
-		}
-		
+
+		$this->value = ($value === null) ? null : var_export($value, true);
+	}
+
+	/**
+	 * Sets the value of the
+	 *
+	 * @return string A string representation of the value
+	 */
+	public function has_value()
+	{
+		return $this->value !== null;
 	}
 
 	/**
