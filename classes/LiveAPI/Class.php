@@ -66,7 +66,14 @@ class LiveAPI_Class
 		list($this->description, $this->tags) = LiveAPI::parse($this->class->getDocComment());
 
 		$this->modifiers = Reflection::getModifierNames($this->class->getModifiers());
-		$this->constants = $this->class->getConstants();
+		foreach ($this->class->getConstants() as $key => $value)
+		{
+			$this->constants[] = array(
+				'name' => $key,
+				'value' => var_export($value, true),
+				'type' => gettype($value),
+			);
+		}
 
 		$props = $this->class->getProperties();
 		usort($props, array($this, "_prop_sort"));
