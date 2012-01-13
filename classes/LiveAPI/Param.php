@@ -59,7 +59,7 @@ class LiveAPI_Param {
 
 		if ($this->param->isDefaultValueAvailable())
 		{
-			$this->default = $this->param->getDefaultValue();
+			$this->default = var_export($this->param->getDefaultValue(), true);
 		}
 
 		if ($this->param->isPassedByReference())
