@@ -83,9 +83,11 @@ class LiveAPI
 	 */
 	public function run()
 	{
+		$theme_path = LIVEAPI_PATH."themes".DIRECTORY_SEPARATOR.$this->config['theme'].DIRECTORY_SEPARATOR;
+
 		// Grab the template
 		$this->mustache = new Mustache;
-		$this->template = file_get_contents(LIVEAPI_PATH."templates/class.mustache");
+		$this->template = file_get_contents($theme_path."class.mustache");
 
 		// Create output directory if it doesn't exist
 		if ( ! is_dir($this->config['output']))
@@ -104,7 +106,6 @@ class LiveAPI
 		}
 
 		// Now generate the index page
-		$theme_path = LIVEAPI_PATH."themes".DIRECTORY_SEPARATOR.$this->config['theme'].DIRECTORY_SEPARATOR;
 		$template = file_get_contents($theme_path."template.mustache");
 		$output = $this->mustache->render($template, array(
 			'classes' => $files,
