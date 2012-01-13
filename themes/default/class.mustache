@@ -63,7 +63,7 @@
 
 	{{#properties}}
 	<section class="property">
-		<h4 id="property:{{name}}">{{get_modifiers}} <code>{{type}}</code> <span class="name">${{name}}</span>{{#has_value}} = {{value}}{{/has_value}}</h4>
+		<h4 id="property:{{name}}">{{get_modifiers}} <small>{{type}}</small> <span class="name">${{name}}</span>{{#has_value}} = {{value}}{{/has_value}}</h4>
 		<div class="description">
 			{{{description}}}
 		</div>
@@ -97,7 +97,7 @@
 		<h5>Tags</h5>
 		<ul>
 		{{#get_tags}}
-			<li>@{{name}} - {{{value}}}</li>
+			<li>{{name}} - {{{value}}}</li>
 		{{/get_tags}}
 		</ul>
 		{{/has_tags}}
@@ -111,8 +111,10 @@
 		</ul>
 		{{/has_return}}
 
+		{{#source}}
 		<h5>Source Code</h5>
 		<pre class="source sunlight-highlight-php">{{source}}</pre>
+		{{/source}}
 	</section>
 	{{/methods}}
 </div>
