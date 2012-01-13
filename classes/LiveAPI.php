@@ -23,9 +23,19 @@ class LiveAPI
 	private $mustatche = null;
 
 	/**
-	 * @var string The mustache template to render a class
+	 * @var string The mustache template to rendering a full page
 	 */
 	private $template = "";
+
+	/**
+	 * @var string  The template used when building a class
+	 */
+	private $template_class = "";
+
+	/**
+	 * @var array   A list of files that will be processed.
+	 */
+	private $files = array();
 
 	/**
 	 * @var array  The configuration for building the api docs
@@ -87,7 +97,8 @@ class LiveAPI
 
 		// Grab the template
 		$this->mustache = new Mustache;
-		$this->template = file_get_contents($theme_path."class.mustache");
+		$this->template = file_get_contents($theme_path."template.mustache");
+		$this->template_class = file_get_contents($theme_path."class.mustache");
 
 		// Create output directory if it doesn't exist
 		if ( ! is_dir($this->config['output']))
@@ -99,21 +110,17 @@ class LiveAPI
 		}
 
 		// Save all of the files
-		$files = array();
 		foreach ($this->getClasses() as $class)
 		{
-			$files[] = $this->saveClass($class);
+			$this->files[] = $this->renderClass($class);
 		}
 
-		// Now generate the index page
-		$template = file_get_contents($theme_path."template.mustache");
-		$output = $this->mustache->render($template, array(
-			'classes' => $files,
-			'date' => date("F jS, Y"),
-			'title' => $this->config['title']
-		));
-
-		$this->doSave("index", $output);
+		// Generate the pages
+		$this->doSave("index.html", file_get_contents($theme_path."homepage.mustache"));
+		foreach ($this->files as $row)
+		{
+			$this->doSave($row['file'], $row['output']);
+		}
 
 		// And move over the assets
 		$this->copy_recursive($theme_path."assets", $this->config['output']);
@@ -123,21 +130,19 @@ class LiveAPI
 	}
 
 	/**
-	 * Processes and saves the api doc for the class.
+	 * Renders a class (from mustache) template.
 	 *
 	 * @param  LiveAPI_Class $class The class to parse and save
-	 * @return string  The filename that was saved
+	 * @return array  An arry with name, file and output.
 	 */
-	private function saveClass(LiveAPI_Class $class)
+	private function renderClass(LiveAPI_Class $class)
 	{
-		$output = $this->mustache->render($this->template, $class);
 		$filename = str_replace("\\", "_", $class->name());
-
-		$this->doSave($filename, $output);
 
 		return array(
 			'name' => $class->name(),
-			'file' => $filename.'.html'
+			'file' => $filename.'.html',
+			'output' => $this->mustache->render($this->template_class, $class)
 		);
 	}
 
@@ -145,11 +150,18 @@ class LiveAPI
 	 * The actual file save mechanism.
 	 *
 	 * @param string $filename The file name
-	 * @param string $output   The html output
+	 * @param string $content  The html content for the template
 	 */
-	private function doSave($filename, $output)
+	private function doSave($filename, $content)
 	{
-		$file = $this->config['output'].$filename.".html";
+		$output = $this->mustache->render($this->template, array(
+			'classes' => $this->files,
+			'date' => date("F jS, Y"),
+			'title' => $this->config['title'],
+			'content' => $content
+		));
+
+		$file = $this->config['output'].$filename;
 		$fp = fopen($file, "w+");
 		fwrite($fp, $output);
 		fclose($fp);
