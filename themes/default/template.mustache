@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>{{title}}</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>{{title}} Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+		{{#classes}}
+			<li><a href="{{file}}">{{name}}</a></li>
+		{{/classes}}
+		</ul>
+	</section>
+	<section id="api">
+		<h2>Welcome</h2>
+		<p>Welcome to the documentation for your library.</p>
+		<p>Please select a class form the list to view the documentation.</p>
+	</section>
+
+	<footer>
+		<p>Documentation generated on {{date}}. Powered by LiveAPI!</p>
+	</footer>
+</body>
+</html>

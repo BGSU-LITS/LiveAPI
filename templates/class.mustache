@@ -1,0 +1,120 @@
+<h1>{{name}}</h1>
+
+{{{description}}}
+
+<dl id="tags">
+{{#get_tags}}
+	<dt>{{name}}</dt>
+	<dd>{{value}}</dd>
+{{/get_tags}}
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+		{{#has_constants}}
+		<ul>
+			{{#constants}}
+			<li><a href="#constant:{{name}}">{{name}}</a></li>
+			{{/constants}}
+		</ul>
+		{{/has_constants}}
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		{{#has_properties}}
+		<ul>
+			{{#properties}}
+			<li><a href="#property:{{name}}">${{name}}</a></li>
+			{{/properties}}
+		</ul>
+		{{/has_properties}}
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		{{#has_methods}}
+		<ul>
+			{{#methods}}
+			<li><a href="#method:{{name}}">{{name}}()</a></li>
+			{{/methods}}
+		</ul>
+		{{/has_methods}}
+	</div>
+</div>
+
+{{#has_constants}}
+<div id="constants">
+	<h2>Constants</h2>
+
+	{{#constants}}
+	<section class="constant">
+		<h4 id="constant:{{name}}">{{name}}</h4>
+		<pre class="value">{{value}}</pre>
+	</section>
+	{{/constants}}
+</div>
+{{/has_constants}}
+
+{{#has_properties}}
+<div id="properties">
+	<h2>Properties</h2>
+
+	{{#properties}}
+	<section class="property">
+		<h4 id="property:{{name}}">{{get_modifiers}} <code>{{type}}</code> <span class="name">${{name}}</span></h4>
+		<div class="description">
+			{{{description}}}
+		</div>
+		<pre class="value">{{value}}</pre>
+	</section>
+	{{/properties}}
+</div>
+{{/has_properties}}
+
+{{#has_methods}}
+<div id="methods">
+	<h2>Methods</h2>
+
+	{{#methods}}
+	<section class="method">
+		<h4 id="method:{{name}}">{{get_modifiers}} function <span class="name">{{name}}</span>({{{param_list}}})</h4>
+
+		<div class="description">
+			{{{description}}}
+		</div>
+
+		{{#has_params}}
+		<h5>Parameters</h5>
+		<ul>
+		{{#params}}
+			<li><code>{{type}}</code> <strong>${{name}}</strong> <small>{{default}}</small> - {{{description}}}</li>
+		{{/params}}
+		</ul>
+		{{/has_params}}
+
+		{{#has_tags}}
+		<h5>Tags</h5>
+		<ul>
+		{{#get_tags}}
+			<li>@{{name}} - {{{value}}}</li>
+		{{/get_tags}}
+		</ul>
+		{{/has_tags}}
+
+		{{#has_return}}
+		<h5>Return Values</h5>
+		<ul>
+		{{#return}}
+			<li><code>{{type}}</code>{{#description}} - {{description}}{{/description}}</li>
+		{{/return}}
+		</ul>
+		{{/has_return}}
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">{{source}}</pre>
+	</section>
+	{{/methods}}
+</div>
+{{/has_methods}}
