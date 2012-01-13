@@ -104,6 +104,47 @@ class LiveAPI_Class
 	}
 
 	/**
+	 * Gets the heading for the title.
+	 *
+	 * @return string [modifiers] Name
+	 */
+	public function heading()
+	{
+		$heading = "";
+
+		if ($this->modifiers)
+		{
+			$heading .= "<small>".implode(" ", $this->modifiers)."</small> ";
+		}
+
+		return $heading . $this->name();
+	}
+
+	/**
+	 * Gets the class lineage
+	 *
+	 * @return [extends] [implements]
+	 */
+	public function lineage()
+	{
+		$output = "";
+
+		if ($this->class->getInterfaceNames())
+		{
+			$output .= "<br /><small>implements</small> ".implode(", ", $this->class->getInterfaceNames());
+		}
+
+		$parent = $this->class->getParentClass();
+		while($parent)
+		{
+			$output .= "<br /><small>extends</small> {$parent->name}";
+			$parent = $parent->getParentClass();
+		}
+
+		return $output;
+	}
+
+	/**
 	 * Gets the tags into a parsable array
 	 *
 	 * @return  array

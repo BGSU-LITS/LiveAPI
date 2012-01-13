@@ -53,6 +53,10 @@ a:hover{
 	background-color:#669;
 }
 
+#lineage{
+	margin-top:-1em;
+}
+
 #class-list{
 	min-height:400px;
 	padding:1em 1%;
