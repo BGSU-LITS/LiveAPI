@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI_Class</h1>
+
+<div id="lineage"></div>
+
+<p>A LiveAPI Class object contains the reflection information for a given class</p>
+
+<p>A lot of this functionality was taken from the Userguide module from the
+Kohana Framework</p>
+
+
+<dl id="tags">
+	<dt>link</dt>
+	<dd>&lt;a href=&quot;Array&quot;&gt;https://github.com/kohana/userguide&lt;/a&gt;</dd>
+	<dt>package</dt>
+	<dd>LiveAPI</dd>
+	<dt>author</dt>
+	<dd>Dave Widmer &lt;dwidmer@bgsu.edu&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:class">$class</a></li>
+			<li><a href="#property:constants">$constants</a></li>
+			<li><a href="#property:description">$description</a></li>
+			<li><a href="#property:methods">$methods</a></li>
+			<li><a href="#property:modifiers">$modifiers</a></li>
+			<li><a href="#property:path">$path</a></li>
+			<li><a href="#property:properties">$properties</a></li>
+			<li><a href="#property:tags">$tags</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:get_tags">get_tags()</a></li>
+			<li><a href="#method:has_constants">has_constants()</a></li>
+			<li><a href="#method:has_methods">has_methods()</a></li>
+			<li><a href="#method:has_properties">has_properties()</a></li>
+			<li><a href="#method:heading">heading()</a></li>
+			<li><a href="#method:lineage">lineage()</a></li>
+			<li><a href="#method:name">name()</a></li>
+			<li><a href="#method:_method_sort">_method_sort()</a></li>
+			<li><a href="#method:_prop_sort">_prop_sort()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:class">public <small>ReflectionClass</small> <span class="name">$class</span></h4>
+		<div class="description">
+			<p>The reflected version of the class</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:constants">public <small>array</small> <span class="name">$constants</span></h4>
+		<div class="description">
+			<p>array of this classes constants</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:description">public <small>string</small> <span class="name">$description</span></h4>
+		<div class="description">
+			<p>description of the entity from the comment</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:methods">public <small>array</small> <span class="name">$methods</span></h4>
+		<div class="description">
+			<p>array of this methods</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:modifiers">public <small>string</small> <span class="name">$modifiers</span></h4>
+		<div class="description">
+			<p>modifiers like abstract, final</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:path">public <small>string</small> <span class="name">$path</span></h4>
+		<div class="description">
+			<p>The full path to the file</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:properties">public <small>array</small> <span class="name">$properties</span></h4>
+		<div class="description">
+			<p>array of this classes properties</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:tags">public <small>array</small> <span class="name">$tags</span></h4>
+		<div class="description">
+			<p>array of tags, retrieved from the comment</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>string</small> <span class="param" title="The fully qualified class name">$class</span> , <small>string</small> <span class="param" title="The full path to the class">$path</span> )</h4>
+
+		<div class="description">
+			<p>Sets up an Class for reflection.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$class</strong>  <small>Required</small> <small></small> - The fully qualified class name</li>
+			<li><code>string</code> <strong>$path</strong>  <small>Required</small> <small></small> - The full path to the class</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct($class, $path)
+{
+	$this-&gt;class = new ReflectionClass($class);
+	$this-&gt;path = $path;
+
+	list($this-&gt;description, $this-&gt;tags) = LiveAPI::parse($this-&gt;class-&gt;getDocComment());
+
+	$this-&gt;modifiers = Reflection::getModifierNames($this-&gt;class-&gt;getModifiers());
+	foreach ($this-&gt;class-&gt;getConstants() as $key =&gt; $value)
+	{
+		$this-&gt;constants[] = array(
+			'name' =&gt; $key,
+			'value' =&gt; var_export($value, true),
+			'type' =&gt; gettype($value),
+		);
+	}
+
+	$props = $this-&gt;class-&gt;getProperties();
+	$default = $this-&gt;class-&gt;getDefaultProperties();
+
+	usort($props, array($this, &quot;_prop_sort&quot;));
+	foreach ($props as $prop)
+	{
+		$default = isset($default[$prop-&gt;name]) ? $default[$prop-&gt;name] : null;
+		$this-&gt;properties[] = new LiveAPI_Property($class, $prop-&gt;name, $default);
+	}
+
+	$methods = $this-&gt;class-&gt;getMethods();
+	usort($methods, array($this, '_method_sort'));
+	foreach ($methods as $m)
+	{
+		$this-&gt;methods[] = new LiveAPI_Method($class, $m-&gt;name);
+	}
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:get_tags">public function <span class="name">get_tags</span>()</h4>
+
+		<div class="description">
+			<p>Gets the tags into a parsable array</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>array</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function get_tags()
+{
+	$tags = array();
+	foreach ($this-&gt;tags as $key =&gt; $value)
+	{
+		$tags[] = array(
+			'name' =&gt; $key,
+			'value' =&gt; implode(&quot; - &quot;, $value),
+		);
+	}
+
+	return $tags;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_constants">public function <span class="name">has_constants</span>()</h4>
+
+		<div class="description">
+			<p>Checks to see if this class has contants</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>boolean</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_constants()
+{
+	return count($this-&gt;constants) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_methods">public function <span class="name">has_methods</span>()</h4>
+
+		<div class="description">
+			<p>Checks to see if this class has methods</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>boolean</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_methods()
+{
+	return count($this-&gt;methods) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_properties">public function <span class="name">has_properties</span>()</h4>
+
+		<div class="description">
+			<p>Checks to see if this class has properties</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>boolean</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_properties()
+{
+	return count($this-&gt;properties) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:heading">public function <span class="name">heading</span>()</h4>
+
+		<div class="description">
+			<p>Gets the heading for the title.</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code> - [modifiers] Name</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function heading()
+{
+	$heading = &quot;&quot;;
+
+	if ($this-&gt;modifiers)
+	{
+		$heading .= &quot;&lt;small&gt;&quot;.implode(&quot; &quot;, $this-&gt;modifiers).&quot;&lt;/small&gt; &quot;;
+	}
+
+	return $heading . $this-&gt;name();
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:lineage">public function <span class="name">lineage</span>()</h4>
+
+		<div class="description">
+			<p>Gets the class lineage</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>[extends]</code> - [implements]</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function lineage()
+{
+	$output = &quot;&quot;;
+
+	if ($this-&gt;class-&gt;getInterfaceNames())
+	{
+		$output .= &quot;&lt;br /&gt;&lt;small&gt;implements&lt;/small&gt; &quot;.implode(&quot;, &quot;, $this-&gt;class-&gt;getInterfaceNames());
+	}
+
+	$parent = $this-&gt;class-&gt;getParentClass();
+	while($parent)
+	{
+		$output .= &quot;&lt;br /&gt;&lt;small&gt;extends&lt;/small&gt; {$parent-&gt;name}&quot;;
+		$parent = $parent-&gt;getParentClass();
+	}
+
+	return $output;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:name">public function <span class="name">name</span>()</h4>
+
+		<div class="description">
+			<p>Gets the name of the class</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function name()
+{
+	return $this-&gt;class-&gt;name;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:_method_sort">protected function <span class="name">_method_sort</span>( <small>ReflectionMethod</small> <span class="param" title="The first item to compare">$a</span> , <small>ReflectionMethod</small> <span class="param" title="The second item to compare">$b</span> )</h4>
+
+		<div class="description">
+			<p>Sort methods based on their visibility and declaring class based on:
+ - methods will be sorted public, protected, then private.
+ - methods that are declared by an ancestor will be after classes
+   declared by the current class
+ - lastly, they will be sorted alphabetically</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>ReflectionMethod</code> <strong>$a</strong>  <small>Required</small> <small></small> - The first item to compare</li>
+			<li><code>ReflectionMethod</code> <strong>$b</strong>  <small>Required</small> <small></small> - The second item to compare</li>
+		</ul>
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>int</code> - -1 for up, 1 for down</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">protected function _method_sort($a, $b)
+{
+	// If one method is public, and the other is not, it goes on top
+	if ($a-&gt;isPublic() AND ( ! $b-&gt;isPublic()))
+		return -1;
+	if ($b-&gt;isPublic() AND ( ! $a-&gt;isPublic()))
+		return 1;
+	
+	// If one method is protected and the other is private, it goes on top
+	if ($a-&gt;isProtected() AND $b-&gt;isPrivate())
+		return -1;
+	if ($b-&gt;isProtected() AND $a-&gt;isPrivate())
+		return 1;
+	
+	// The methods have the same visibility, so check the declaring class depth:
+	
+	
+	/*
+	echo kohana::debug('a is '.$a-&gt;class.'::'.$a-&gt;name,'b is '.$b-&gt;class.'::'.$b-&gt;name,
+					   'are the classes the same?', $a-&gt;class == $b-&gt;class,'if they are, the result is:',strcmp($a-&gt;name, $b-&gt;name),
+					   'is a this class?', $a-&gt;name == $this-&gt;class-&gt;name,-1,
+					   'is b this class?', $b-&gt;name == $this-&gt;class-&gt;name,1,
+					   'otherwise, the result is:',strcmp($a-&gt;class, $b-&gt;class)
+					   );
+	*/
+
+	// If both methods are defined in the same class, just compare the method names
+	if ($a-&gt;class == $b-&gt;class)
+		return strcmp($a-&gt;name, $b-&gt;name);
+
+	// If one of them was declared by this class, it needs to be on top
+	if ($a-&gt;name == $this-&gt;class-&gt;name)
+		return -1;
+	if ($b-&gt;name == $this-&gt;class-&gt;name)
+		return 1;
+
+	// Otherwise, get the parents of each methods declaring class, then compare which function has more &quot;ancestors&quot;
+	$adepth = 0;
+	$bdepth = 0;
+
+	$parent = $a-&gt;getDeclaringClass();
+	do
+	{
+		$adepth++;
+	}
+	while ($parent = $parent-&gt;getParentClass());
+
+	$parent = $b-&gt;getDeclaringClass();
+	do
+	{
+		$bdepth++;
+	}
+	while ($parent = $parent-&gt;getParentClass());
+
+	return $bdepth - $adepth;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:_prop_sort">protected function <span class="name">_prop_sort</span>( <small>ReflectionProperty</small> <span class="param" title="The first item to compare">$a</span> , <small>ReflectionProperty</small> <span class="param" title="The second item to compare">$b</span> )</h4>
+
+		<div class="description">
+			<p>A custom sorting method for the class properties.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>ReflectionProperty</code> <strong>$a</strong>  <small>Required</small> <small></small> - The first item to compare</li>
+			<li><code>ReflectionProperty</code> <strong>$b</strong>  <small>Required</small> <small></small> - The second item to compare</li>
+		</ul>
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>int</code> - -1 for up, 1 for down</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">protected function _prop_sort($a, $b)
+{
+	// If one property is public, and the other is not, it goes on top
+	if ($a-&gt;isPublic() AND ( ! $b-&gt;isPublic()))
+		return -1;
+	if ($b-&gt;isPublic() AND ( ! $a-&gt;isPublic()))
+		return 1;
+	
+	// If one property is protected and the other is private, it goes on top
+	if ($a-&gt;isProtected() AND $b-&gt;isPrivate())
+		return -1;
+	if ($b-&gt;isProtected() AND $a-&gt;isPrivate())
+		return 1;
+	
+	// Otherwise just do alphabetical
+	return strcmp($a-&gt;name, $b-&gt;name);
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>

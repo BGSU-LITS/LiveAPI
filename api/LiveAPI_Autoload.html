@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI_Autoload</h1>
+
+<div id="lineage"></div>
+
+<p>Autoloading for the LiveAPI classes</p>
+
+
+<dl id="tags">
+	<dt>package</dt>
+	<dd>LiveAPI</dd>
+	<dt>author</dt>
+	<dd>Dave Widmer &lt;dwidmer@bgsu.edu&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:extension">$extension</a></li>
+			<li><a href="#property:include_path">$include_path</a></li>
+			<li><a href="#property:namespace">$namespace</a></li>
+			<li><a href="#property:separator">$separator</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:__destruct">__destruct()</a></li>
+			<li><a href="#method:autoload">autoload()</a></li>
+			<li><a href="#method:register">register()</a></li>
+			<li><a href="#method:unregister">unregister()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:extension">private <small>string</small> <span class="name">$extension</span> = '.php'</h4>
+		<div class="description">
+			<p>The file extension.</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:include_path">private <small>string</small> <span class="name">$include_path</span> = '.'</h4>
+		<div class="description">
+			<p>The base path for loading</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:namespace">private <small>string</small> <span class="name">$namespace</span> = '.'</h4>
+		<div class="description">
+			<p>The namespace</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:separator">private <small>string</small> <span class="name">$separator</span> = '.'</h4>
+		<div class="description">
+			<p>The character that separates the namespaces</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>string</small> <span class="param" title="The include path for the files">$path</span> [, <small>string</small> <span class="param" title="The namespace for the classes">$ns</span> <small>= ''</small> ] )</h4>
+
+		<div class="description">
+			<p>Gets the autoloader setup for use.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$path</strong>  <small>Required</small> <small></small> - The include path for the files</li>
+			<li><code>string</code> <strong>$ns</strong>  <small>''</small> - The namespace for the classes</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct($path, $ns = &quot;&quot;)
+{
+	$this-&gt;include_path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+	$this-&gt;namespace = $ns;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:__destruct">public function <span class="name">__destruct</span>()</h4>
+
+		<div class="description">
+			<p>Unregisters the autoloading for this class when the object is removed.</p>
+
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __destruct()
+{
+	$this-&gt;unregister();
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:autoload">public function <span class="name">autoload</span>( <small>string</small> <span class="param" title="The class name">$class</span> )</h4>
+
+		<div class="description">
+			<p>Class autoloading</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$class</strong>  <small>Required</small> <small></small> - The class name</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function autoload($class)
+{
+	if ($this-&gt;namespace)
+	{
+		$pattern = '/^'.$this-&gt;namespace.$this-&gt;separator.'/i';
+		$class = preg_replace($pattern, &quot;&quot;, $class);
+	}
+	
+	// Replace underscores and namespace delimiters
+	$class = str_replace(array(&quot;_&quot;, $this-&gt;separator), DIRECTORY_SEPARATOR, $class);
+
+	$file = $this-&gt;include_path.$class.$this-&gt;extension;
+
+	if (is_file($file))
+	{
+		include $file;
+	}
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:register">public function <span class="name">register</span>()</h4>
+
+		<div class="description">
+			<p>Registers the autoloader</p>
+
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function register()
+{
+	spl_autoload_register(array($this, &quot;autoload&quot;));
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:unregister">public function <span class="name">unregister</span>()</h4>
+
+		<div class="description">
+			<p>Unregisters the autoloader</p>
+
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function unregister()
+{
+	spl_autoload_unregister(array($this, &quot;autoload&quot;));
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>

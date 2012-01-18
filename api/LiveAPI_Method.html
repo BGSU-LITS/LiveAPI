@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI_Method</h1>
+
+<div id="lineage"></div>
+
+<p>Class method documentation generator.</p>
+
+
+<dl id="tags">
+	<dt>package</dt>
+	<dd>Kohana/Userguide</dd>
+	<dt>category</dt>
+	<dd>Base</dd>
+	<dt>author</dt>
+	<dd>Kohana Team</dd>
+	<dt>copyright</dt>
+	<dd>&amp;copy; 2009 Kohana Team</dd>
+	<dt>license</dt>
+	<dd>&lt;a href=&quot;http://kohanaphp.com/license&quot;&gt;http://kohanaphp.com/license&lt;/a&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:method">$method</a></li>
+			<li><a href="#property:params">$params</a></li>
+			<li><a href="#property:return">$return</a></li>
+			<li><a href="#property:source">$source</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:get_modifiers">get_modifiers()</a></li>
+			<li><a href="#method:get_tags">get_tags()</a></li>
+			<li><a href="#method:has_params">has_params()</a></li>
+			<li><a href="#method:has_return">has_return()</a></li>
+			<li><a href="#method:has_tags">has_tags()</a></li>
+			<li><a href="#method:name">name()</a></li>
+			<li><a href="#method:param_list">param_list()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:method">public <small>ReflectionMethod</small> <span class="name">$method</span></h4>
+		<div class="description">
+			<p>The ReflectionMethod for this class</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:params">public <small>array</small> <span class="name">$params</span></h4>
+		<div class="description">
+			<p>array of Kodoc_Method_Param</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:return">public <small>array</small> <span class="name">$return</span></h4>
+		<div class="description">
+			<p>the things this function can return</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:source">public <small>string</small> <span class="name">$source</span></h4>
+		<div class="description">
+			<p>the source code for this function</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>string</small> <span class="param" title="The calling class">$class</span> , <small>string</small> <span class="param" title="The method name">$method</span> )</h4>
+
+		<div class="description">
+			<p>Creates a new Method class.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$class</strong>  <small>Required</small> <small></small> - The calling class</li>
+			<li><code>string</code> <strong>$method</strong>  <small>Required</small> <small></small> - The method name</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct($class, $method)
+{
+	$this-&gt;method = new ReflectionMethod($class, $method);
+
+	$this-&gt;class = $parent = $this-&gt;method-&gt;getDeclaringClass();
+
+	$this-&gt;modifiers = Reflection::getModifierNames($this-&gt;method-&gt;getModifiers());
+
+	do
+	{
+		if ($parent-&gt;hasMethod($method) AND $comment = $parent-&gt;getMethod($method)-&gt;getDocComment())
+		{
+			// Found a description for this method
+			break;
+		}
+	}
+	while ($parent = $parent-&gt;getParentClass());
+
+	list($this-&gt;description, $tags) = LiveAPI::parse($comment);
+
+	if ($file = $this-&gt;class-&gt;getFileName())
+	{
+		$this-&gt;source = LiveAPI::source($file, $this-&gt;method-&gt;getStartLine(), $this-&gt;method-&gt;getEndLine());
+	}
+
+	if (isset($tags['param']))
+	{
+		$params = array();
+
+		foreach ($this-&gt;method-&gt;getParameters() as $i =&gt; $param)
+		{
+			$param = new LiveAPI_Param(array($this-&gt;method-&gt;class, $this-&gt;method-&gt;name),$i);
+
+			if (isset($tags['param'][$i]))
+			{
+				preg_match('/^(\S+)(?:\s*(?:\$'.$param-&gt;name.'\s*)?(.+))?$/', $tags['param'][$i], $matches);
+
+				$param-&gt;type = $matches[1];
+
+				if (isset($matches[2]))
+				{
+					$param-&gt;description = ucfirst($matches[2]);
+				}
+			}
+			$params[] = $param;
+		}
+
+		$this-&gt;params = $params;
+
+		unset($tags['param']);
+	}
+
+	if (isset($tags['return']))
+	{
+		foreach ($tags['return'] as $return)
+		{
+			if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $return, $matches))
+			{
+				$this-&gt;return[] = array(
+					'type' =&gt; $matches[1],
+					'description' =&gt; isset($matches[2]) ? $matches[2] : ''
+				);
+			}
+		}
+
+		unset($tags['return']);
+	}
+
+	$this-&gt;tags = $tags;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:get_modifiers">public function <span class="name">get_modifiers</span>()</h4>
+
+		<div class="description">
+			<p>Gets the modifiers for this property.</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function get_modifiers()
+{
+	return implode(&quot; &quot;, $this-&gt;modifiers);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:get_tags">public function <span class="name">get_tags</span>()</h4>
+
+		<div class="description">
+			<p>Gets the tags into a parsable array</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>array</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function get_tags()
+{
+	$tags = array();
+	foreach ($this-&gt;tags as $key =&gt; $value)
+	{
+		$tags[] = array(
+			'name' =&gt; $key,
+			'value' =&gt; implode(&quot; - &quot;, $value),
+		);
+	}
+
+	return $tags;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_params">public function <span class="name">has_params</span>()</h4>
+
+		<div class="description">
+			
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_params()
+{
+	return count($this-&gt;params) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_return">public function <span class="name">has_return</span>()</h4>
+
+		<div class="description">
+			
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_return()
+{
+	return count($this-&gt;return) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_tags">public function <span class="name">has_tags</span>()</h4>
+
+		<div class="description">
+			
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_tags()
+{
+	return count($this-&gt;tags) &gt; 0;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:name">public function <span class="name">name</span>()</h4>
+
+		<div class="description">
+			<p>Gets the name of this property.</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function name()
+{
+	return $this-&gt;method-&gt;name;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:param_list">public function <span class="name">param_list</span>()</h4>
+
+		<div class="description">
+			
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function param_list()
+{
+	if (empty($this-&gt;params))
+	{
+		return &quot;&quot;;
+	}
+	
+	$out = ' ';
+	$required = TRUE;
+	$first = TRUE;
+	foreach ($this-&gt;params as $param)
+	{
+		if ($required AND $param-&gt;default AND $first)
+		{
+			$out .= '[ '.$param;
+			$required = FALSE;
+			$first = FALSE;
+		}
+		elseif ($required AND $param-&gt;default)
+		{
+			$out .= '[, '.$param;
+			$required = FALSE;
+		}
+		elseif ($first)
+		{
+			$out .= $param;
+			$first = FALSE;
+		}
+		else
+		{
+			$out .= ', '.$param;
+		}
+	}
+
+	if ( ! $required)
+	{
+		$out .= '] ';
+	}
+
+	return $out;
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>

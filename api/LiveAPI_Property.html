@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI_Property</h1>
+
+<div id="lineage"></div>
+
+<p>Class property documentation generator.</p>
+
+
+<dl id="tags">
+	<dt>package</dt>
+	<dd>Kohana/Userguide</dd>
+	<dt>category</dt>
+	<dd>Base</dd>
+	<dt>author</dt>
+	<dd>Kohana Team</dd>
+	<dt>copyright</dt>
+	<dd>&amp;copy; 2009 Kohana Team</dd>
+	<dt>license</dt>
+	<dd>&lt;a href=&quot;http://kohanaphp.com/license&quot;&gt;http://kohanaphp.com/license&lt;/a&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:modifiers">$modifiers</a></li>
+			<li><a href="#property:property">$property</a></li>
+			<li><a href="#property:type">$type</a></li>
+			<li><a href="#property:value">$value</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:get_modifiers">get_modifiers()</a></li>
+			<li><a href="#method:has_value">has_value()</a></li>
+			<li><a href="#method:name">name()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:modifiers">public <small>string</small> <span class="name">$modifiers</span> = 'public'</h4>
+		<div class="description">
+			<p>modifiers: public, private, static, etc</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:property">public <small>object</small> <span class="name">$property</span> = 'p'</h4>
+		<div class="description">
+			<p>ReflectionProperty</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:type">public <small>string</small> <span class="name">$type</span> = 'p'</h4>
+		<div class="description">
+			<p>variable type, retrieved from the comment</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:value">public <small>string</small> <span class="name">$value</span> = 'p'</h4>
+		<div class="description">
+			<p>value of the property</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>string</small> <span class="param" title="The class name">$class</span> , <small>string</small> <span class="param" title="The property name">$property</span> , <small>mixed</small> <span class="param" title="The default value for the property">$value</span> )</h4>
+
+		<div class="description">
+			<p>Creates a new Propery class</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$class</strong>  <small>Required</small> <small></small> - The class name</li>
+			<li><code>string</code> <strong>$property</strong>  <small>Required</small> <small></small> - The property name</li>
+			<li><code>mixed</code> <strong>$value</strong>  <small>Required</small> <small></small> - The default value for the property</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct($class, $property, $value)
+{
+	$property = new ReflectionProperty($class, $property);
+
+	list($description, $tags) = LiveAPI::parse($property-&gt;getDocComment());
+
+	$this-&gt;description = $description;
+	$this-&gt;modifiers = Reflection::getModifierNames($property-&gt;getModifiers());
+
+	if (isset($tags['var']))
+	{
+		if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $tags['var'][0], $matches))
+		{
+			$this-&gt;type = $matches[1];
+
+			if (isset($matches[2]))
+			{
+				$this-&gt;description = Markdown($matches[2]);
+			}
+		}
+	}
+
+	$this-&gt;property = $property;
+
+	$this-&gt;value = ($value === null) ? null : var_export($value, true);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:get_modifiers">public function <span class="name">get_modifiers</span>()</h4>
+
+		<div class="description">
+			<p>Gets the modifiers for this property.</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function get_modifiers()
+{
+	return implode(&quot; &quot;, $this-&gt;modifiers);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:has_value">public function <span class="name">has_value</span>()</h4>
+
+		<div class="description">
+			<p>Sets the value of the</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code> - A string representation of the value</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function has_value()
+{
+	return $this-&gt;value !== null;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:name">public function <span class="name">name</span>()</h4>
+
+		<div class="description">
+			<p>Gets the name of this property.</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>string</code></li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function name()
+{
+	return $this-&gt;property-&gt;name;
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>

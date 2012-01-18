@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI</h1>
+
+<div id="lineage"></div>
+
+<p>The LiveAPI class.</p>
+
+
+<dl id="tags">
+	<dt>package</dt>
+	<dd>LiveAPI</dd>
+	<dt>author</dt>
+	<dd>Dave Widmer &lt;dwidmer@bgsu.edu&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:config">$config</a></li>
+			<li><a href="#property:classes">$classes</a></li>
+			<li><a href="#property:files">$files</a></li>
+			<li><a href="#property:mustatche">$mustatche</a></li>
+			<li><a href="#property:path">$path</a></li>
+			<li><a href="#property:template">$template</a></li>
+			<li><a href="#property:template_class">$template_class</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:getClasses">getClasses()</a></li>
+			<li><a href="#method:getConfig">getConfig()</a></li>
+			<li><a href="#method:parse">parse()</a></li>
+			<li><a href="#method:run">run()</a></li>
+			<li><a href="#method:source">source()</a></li>
+			<li><a href="#method:copy_recursive">copy_recursive()</a></li>
+			<li><a href="#method:doSave">doSave()</a></li>
+			<li><a href="#method:renderClass">renderClass()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:config">protected <small>array</small> <span class="name">$config</span> = array (
+  'dir' =&gt; 'classes',
+  'output' =&gt; 'api',
+  'namespace' =&gt; '',
+  'separator' =&gt; '\\',
+  'theme' =&gt; 'default',
+  'title' =&gt; 'LiveAPI Documentation',
+)</h4>
+		<div class="description">
+			<p>The configuration for building the api docs</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:classes">private <small>array</small> <span class="name">$classes</span></h4>
+		<div class="description">
+			<p>The classes to parse.</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:files">private <small>array</small> <span class="name">$files</span></h4>
+		<div class="description">
+			<p>A list of files that will be processed.</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:mustatche">private <small>Mustache</small> <span class="name">$mustatche</span></h4>
+		<div class="description">
+			<p>The mustache renderer.</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:path">private <small>string</small> <span class="name">$path</span></h4>
+		<div class="description">
+			<p>The base path to run all documentation operations on</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:template">private <small>string</small> <span class="name">$template</span></h4>
+		<div class="description">
+			<p>The mustache template to rendering a full page</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:template_class">private <small>string</small> <span class="name">$template_class</span></h4>
+		<div class="description">
+			<p>The template used when building a class</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>array</small> <span class="param" title="The command-line arguments">$argv</span> )</h4>
+
+		<div class="description">
+			<p>Setup a new LiveAPI class for api generation</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>array</code> <strong>$argv</strong>  <small>Required</small> <small></small> - The command-line arguments</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct(array $argv)
+{
+	// Set the base path
+	$this-&gt;path = exec(&quot;pwd&quot;).DIRECTORY_SEPARATOR;
+
+	array_shift($argv); // Take off the script name
+
+	$config = array();
+	// Get the arguments
+	foreach ($argv as $arg)
+	{
+		$arg = ltrim($arg, &quot;--&quot;);
+		list($key, $value) = explode(&quot;=&quot;, $arg);
+		$config[$key] = $value;
+	}
+
+	$this-&gt;config = array_merge($this-&gt;config, $config);
+
+	// Set the full path for the file directory to search
+	$this-&gt;config['dir'] = $this-&gt;path.rtrim($this-&gt;config['dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+	// Normalize the namespace
+	if ($this-&gt;config['namespace'])
+	{
+		$this-&gt;config['namespace'] = rtrim($this-&gt;config['namespace'], $this-&gt;config['separator']) . $this-&gt;config['separator'];
+	}
+
+	// Convert output path to full path
+	if (substr($this-&gt;config['output'], 0, 1) !== DIRECTORY_SEPARATOR)
+	{
+		$this-&gt;config['output'] = $this-&gt;path.rtrim($this-&gt;config['output'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+	}
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:getClasses">public function <span class="name">getClasses</span>()</h4>
+
+		<div class="description">
+			<p>Gets all of the classes in the project</p>
+
+		</div>
+
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>array</code> - (of LiveAPI_Class instances)</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function getClasses()
+{
+	if ($this-&gt;classes === null)
+	{
+		$dir = new RecursiveDirectoryIterator($this-&gt;config['dir']);
+		$iterator = new RecursiveIteratorIterator($dir);
+		$regex = new RegexIterator($iterator, '/^.+\.php$/i');
+
+		foreach ($regex as $row)
+		{
+			$pathname = $row-&gt;getPathname();
+
+			// Make a key that is the fully qualified name of the class
+			$name = $this-&gt;config['namespace'] . str_replace(
+					array($this-&gt;config['dir'], DIRECTORY_SEPARATOR),
+					array(&quot;&quot;, $this-&gt;config['separator']),
+					substr($pathname, 0, -4)
+			);
+
+			$this-&gt;classes[] = new LiveAPI_Class($name, $pathname);
+		}
+	}
+
+	return $this-&gt;classes;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:getConfig">public function <span class="name">getConfig</span>( [ <small>string</small> <span class="param" title="The key to get, if no key is set, the whole config array will be returned">$key</span> <small>= NULL</small> ] )</h4>
+
+		<div class="description">
+			<p>Gets the configuration data.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$key</strong>  <small>NULL</small> - The key to get, if no key is set, the whole config array will be returned</li>
+		</ul>
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>mixed</code> - The value of the key, or the full config array</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function getConfig($key = null)
+{
+	if ($key === null)
+	{
+		return $this-&gt;config;
+	}
+
+	return isset($this-&gt;config[$key]) ? $this-&gt;config[$key] : null;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:parse">public static function <span class="name">parse</span>( <small>string</small> <span class="param" title="The comment retreived using ReflectionClass->getDocComment()">$comment</span> )</h4>
+
+		<div class="description">
+			<p>Parse a comment to extract the description and the tags</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$comment</strong>  <small>Required</small> <small></small> - The comment retreived using ReflectionClass-&gt;getDocComment()</li>
+		</ul>
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>array</code> - array(string $description, array $tags)</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public static function parse($comment)
+{
+	// Normalize all new lines to \n
+	$comment = str_replace(array(&quot;\r\n&quot;, &quot;\n&quot;), &quot;\n&quot;, $comment);
+
+	// Remove the phpdoc open/close tags and split
+	$comment = array_slice(explode(&quot;\n&quot;, $comment), 1, -1);
+
+	// Tag content
+	$tags = array();
+
+	foreach ($comment as $i =&gt; $line)
+	{
+		// Remove all leading whitespace
+		$line = preg_replace('/^\s*\* ?/m', '', $line);
+
+		// Search this line for a tag
+		if (preg_match('/^@(\S+)(?:\s*(.+))?$/', $line, $matches))
+		{
+			// This is a tag line
+			unset($comment[$i]);
+
+			$name = $matches[1];
+			$text = isset($matches[2]) ? $matches[2] : '';
+
+			switch ($name)
+			{
+				case 'license':
+					if (strpos($text, '://') !== FALSE)
+					{
+						// Convert the license into a link
+						$text = '&lt;a href=&quot;'.$text.'&quot;&gt;'.$text.'&lt;/a&gt;';
+					}
+				break;
+				case 'link':
+				case 'see':
+					$text = preg_split('/\s+/', $text, 2);
+					$desc = isset($text[1]) ? $text[1] : $text[0];
+					$text = '&lt;a href=&quot;'.$text.'&quot;&gt;'.$desc.'&lt;/a&gt;';
+				break;
+				case 'copyright':
+					if (strpos($text, '(c)') !== FALSE)
+					{
+						// Convert the copyright sign
+						$text = str_replace('(c)', '&amp;copy;', $text);
+					}
+				break;
+				case 'throws':
+					/** Figure out a good way to do this...
+					if (preg_match('/^(\w+)\W(.*)$/', $text, $matches))
+					{
+						$text = HTML::anchor(Route::get('docs/api')-&gt;uri(array('class' =&gt; $matches[1])), $matches[1]).' '.$matches[2];
+					}
+					else
+					{
+						$text = HTML::anchor(Route::get('docs/api')-&gt;uri(array('class' =&gt; $text)), $text);
+					}
+					 */
+				break;
+				case 'uses':
+					/** Figure out a good way for this too...
+					if (preg_match('/^'.Kodoc::$regex_class_member.'$/i', $text, $matches))
+					{
+						$text = Kodoc::link_class_member($matches);
+					}
+					 */
+				break;
+				// Don't show @access lines, they are shown elsewhere
+				case 'access':
+					continue 2;
+			}
+
+			// Add the tag
+			$tags[$name][] = $text;
+		}
+		else
+		{
+			// Overwrite the comment line
+			$comment[$i] = (string) $line;
+		}
+	}
+
+	// Concat the comment lines back to a block of text
+	if ($comment = trim(implode(&quot;\n&quot;, $comment)))
+	{
+		// Parse the comment with Markdown
+		$comment = Markdown($comment);
+	}
+
+	return array($comment, $tags);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:run">public function <span class="name">run</span>()</h4>
+
+		<div class="description">
+			<p>Run the docs. This is where all the magic happens!!</p>
+
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function run()
+{
+	$theme_path = LIVEAPI_PATH.&quot;themes&quot;.DIRECTORY_SEPARATOR.$this-&gt;config['theme'].DIRECTORY_SEPARATOR;
+
+	// Grab the template
+	$this-&gt;mustache = new Mustache;
+	$this-&gt;template = file_get_contents($theme_path.&quot;template.mustache&quot;);
+	$this-&gt;template_class = file_get_contents($theme_path.&quot;class.mustache&quot;);
+
+	// Create output directory if it doesn't exist
+	if ( ! is_dir($this-&gt;config['output']))
+	{
+		if ( ! mkdir($this-&gt;config['output']))
+		{
+			throw new Exception(&quot;{$this-&gt;config['output']} is not writable.&quot;);
+		}
+	}
+
+	// Save all of the files
+	foreach ($this-&gt;getClasses() as $class)
+	{
+		$this-&gt;files[] = $this-&gt;renderClass($class);
+	}
+
+	// Generate the pages
+	$this-&gt;doSave(&quot;index.html&quot;, file_get_contents($theme_path.&quot;homepage.mustache&quot;));
+	foreach ($this-&gt;files as $row)
+	{
+		$this-&gt;doSave($row['file'], $row['output']);
+	}
+
+	// And move over the assets
+	$this-&gt;copy_recursive($theme_path.&quot;assets&quot;, $this-&gt;config['output']);
+
+	// And we are done!!
+	echo &quot;API Generated!\n&quot;;
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:source">public static function <span class="name">source</span>( <small>string</small> <span class="param" title="The filename">$file</span> , <small>int</small> <span class="param" title="Start line?">$start</span> , <small>int</small> <span class="param" title="End line?">$end</span> )</h4>
+
+		<div class="description">
+			<p>Get the source of a function</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$file</strong>  <small>Required</small> <small></small> - The filename</li>
+			<li><code>int</code> <strong>$start</strong>  <small>Required</small> <small></small> - Start line?</li>
+			<li><code>int</code> <strong>$end</strong>  <small>Required</small> <small></small> - End line?</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public static function source($file, $start, $end)
+{
+	if ( ! $file) return FALSE;
+
+	$file = file($file, FILE_IGNORE_NEW_LINES);
+
+	$file = array_slice($file, $start - 1, $end - $start + 1);
+
+	if (preg_match('/^(\s+)/', $file[0], $matches))
+	{
+		$padding = strlen($matches[1]);
+
+		foreach ($file as &amp; $line)
+		{
+			$line = substr($line, $padding);
+		}
+	}
+
+	return implode(&quot;\n&quot;, $file);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:copy_recursive">private function <span class="name">copy_recursive</span>( <small>string</small> <span class="param" title="The source directory">$from</span> , <small>string</small> <span class="param" title="The destination directory">$to</span> )</h4>
+
+		<div class="description">
+			<p>Copies files over recursively.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$from</strong>  <small>Required</small> <small></small> - The source directory</li>
+			<li><code>string</code> <strong>$to</strong>  <small>Required</small> <small></small> - The destination directory</li>
+		</ul>
+
+		<h5>Tags</h5>
+		<ul>
+			<li>todo - Rewrite to not use a shell command....</li>
+		</ul>
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">private function copy_recursive($from, $to)
+{
+	exec(&quot;`cp -r {$from} {$to}`&quot;);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:doSave">private function <span class="name">doSave</span>( <small>string</small> <span class="param" title="The file name">$filename</span> , <small>string</small> <span class="param" title="The html content for the template">$content</span> )</h4>
+
+		<div class="description">
+			<p>The actual file save mechanism.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>string</code> <strong>$filename</strong>  <small>Required</small> <small></small> - The file name</li>
+			<li><code>string</code> <strong>$content</strong>  <small>Required</small> <small></small> - The html content for the template</li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">private function doSave($filename, $content)
+{
+	$output = $this-&gt;mustache-&gt;render($this-&gt;template, array(
+		'classes' =&gt; $this-&gt;files,
+		'date' =&gt; date(&quot;F jS, Y&quot;),
+		'title' =&gt; $this-&gt;config['title'],
+		'content' =&gt; $content
+	));
+
+	$file = $this-&gt;config['output'].$filename;
+	$fp = fopen($file, &quot;w+&quot;);
+	fwrite($fp, $output);
+	fclose($fp);
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:renderClass">private function <span class="name">renderClass</span>( <small>LiveAPI_Class</small> <span class="param" title="The class to parse and save">$class</span> )</h4>
+
+		<div class="description">
+			<p>Renders a class (from mustache) template.</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>LiveAPI_Class</code> <strong>$class</strong>  <small>Required</small> <small></small> - The class to parse and save</li>
+		</ul>
+
+
+		<h5>Return Values</h5>
+		<ul>
+			<li><code>array</code> - An arry with name, file and output.</li>
+		</ul>
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">private function renderClass(LiveAPI_Class $class)
+{
+	$filename = str_replace(&quot;\\&quot;, &quot;_&quot;, $class-&gt;name());
+
+	return array(
+		'name' =&gt; $class-&gt;name(),
+		'file' =&gt; $filename.'.html',
+		'output' =&gt; $this-&gt;mustache-&gt;render($this-&gt;template_class, $class)
+	);
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>

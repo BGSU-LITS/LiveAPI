@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>LiveAPI Documentation</title>
+
+	<!-- CSS -->
+	<link href="assets/css/normalize.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/css/sunlight.liveapi.css" rel="stylesheet" type="text/css" media="screen" />
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="assets/js/sunlight-min.js"></script>
+	<script src="assets/js/sunlight.php-min.js"></script>
+	<script src="assets/js/jquery.sunlight.js"></script>
+	<script src="assets/js/liveapi.js"></script>
+</head>
+<body>
+	<header>
+		<h1>LiveAPI Documentation</h1>
+	</header>
+	<section id="search-bar"></section>
+
+	<section id="class-list">
+		<h3>Class List</h3>
+		<ul>
+			<li><a href="LiveAPI_Autoload.html">LiveAPI_Autoload</a></li>
+			<li><a href="LiveAPI_Class.html">LiveAPI_Class</a></li>
+			<li><a href="LiveAPI_Method.html">LiveAPI_Method</a></li>
+			<li><a href="LiveAPI_Param.html">LiveAPI_Param</a></li>
+			<li><a href="LiveAPI_Property.html">LiveAPI_Property</a></li>
+			<li><a href="LiveAPI.html">LiveAPI</a></li>
+		</ul>
+	</section>
+	<section id="api">
+		<h1>LiveAPI_Param</h1>
+
+<div id="lineage"></div>
+
+<p>Class method parameter documentation generator.</p>
+
+
+<dl id="tags">
+	<dt>package</dt>
+	<dd>Kohana/Userguide</dd>
+	<dt>category</dt>
+	<dd>Base</dd>
+	<dt>author</dt>
+	<dd>Kohana Team</dd>
+	<dt>copyright</dt>
+	<dd>&amp;copy; 2009 Kohana Team</dd>
+	<dt>license</dt>
+	<dd>&lt;a href=&quot;http://kohanaphp.com/license&quot;&gt;http://kohanaphp.com/license&lt;/a&gt;</dd>
+</dl>
+
+<div id="toc">
+	<div class="section">
+		<h3>Constants</h3>
+	</div>
+	
+	<div class="section">
+		<h3>Properties</h3>
+		<ul>
+			<li><a href="#property:default">$default</a></li>
+			<li><a href="#property:description">$description</a></li>
+			<li><a href="#property:name">$name</a></li>
+			<li><a href="#property:optional">$optional</a></li>
+			<li><a href="#property:param">$param</a></li>
+			<li><a href="#property:reference">$reference</a></li>
+			<li><a href="#property:type">$type</a></li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h3>Methods</h3>
+		<ul>
+			<li><a href="#method:__construct">__construct()</a></li>
+			<li><a href="#method:__toString">__toString()</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div id="properties">
+	<h2>Properties</h2>
+
+	<section class="property">
+		<h4 id="property:default">public <small>string</small> <span class="name">$default</span></h4>
+		<div class="description">
+			<p>default value of this param</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:description">public <small>string</small> <span class="name">$description</span></h4>
+		<div class="description">
+			<p>description of this parameter</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:name">public <small>string</small> <span class="name">$name</span></h4>
+		<div class="description">
+			<p>name of this var</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:optional">public <small>boolean</small> <span class="name">$optional</span></h4>
+		<div class="description">
+			<p>is the parameter optional?</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:param">public <small>object</small> <span class="name">$param</span></h4>
+		<div class="description">
+			<p>ReflectionParameter for this property</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:reference">public <small>boolean</small> <span class="name">$reference</span></h4>
+		<div class="description">
+			<p>is the parameter passed by reference?</p>
+
+		</div>
+	</section>
+	<section class="property">
+		<h4 id="property:type">public <small>string</small> <span class="name">$type</span></h4>
+		<div class="description">
+			<p>variable type, retrieved from the comment</p>
+
+		</div>
+	</section>
+</div>
+
+<div id="methods">
+	<h2>Methods</h2>
+
+	<section class="method">
+		<h4 id="method:__construct">public function <span class="name">__construct</span>( <small>type</small> <span class="param" title="$name">$name</span> , <small>type</small> <span class="param" title=" ">$prop</span> )</h4>
+
+		<div class="description">
+			<p>Creates a new Param</p>
+
+		</div>
+
+		<h5>Parameters</h5>
+		<ul>
+			<li><code>type</code> <strong>$name</strong>  <small>Required</small> <small></small> - $name</li>
+			<li><code>type</code> <strong>$prop</strong>  <small>Required</small> <small></small> -  </li>
+		</ul>
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __construct($name, $prop)
+{
+	$this-&gt;param = new ReflectionParameter($name, $prop);
+
+	$this-&gt;name = $this-&gt;param-&gt;name;
+
+	if ($this-&gt;param-&gt;isDefaultValueAvailable())
+	{
+		$this-&gt;default = var_export($this-&gt;param-&gt;getDefaultValue(), true);
+	}
+
+	if ($this-&gt;param-&gt;isPassedByReference())
+	{
+		$this-&gt;reference = TRUE;
+	}
+
+	if ($this-&gt;param-&gt;isOptional())
+	{
+		$this-&gt;optional = TRUE;
+	}
+}</pre>
+	</section>
+	<section class="method">
+		<h4 id="method:__toString">public function <span class="name">__toString</span>()</h4>
+
+		<div class="description">
+			
+		</div>
+
+
+
+
+		<h5>Source Code</h5>
+		<pre class="source sunlight-highlight-php">public function __toString()
+{
+	$display = '';
+
+	if ($this-&gt;type)
+	{
+		$display .= '&lt;small&gt;'.$this-&gt;type.'&lt;/small&gt; ';
+	}
+
+	if ($this-&gt;reference)
+	{
+		$display .= '&lt;small&gt;&lt;abbr title=&quot;passed by reference&quot;&gt;&amp;&lt;/abbr&gt;&lt;/small&gt; ';
+	}
+
+	if ($this-&gt;description)
+	{
+		$display .= '&lt;span class=&quot;param&quot; title=&quot;'.$this-&gt;description.'&quot;&gt;$'.$this-&gt;name.'&lt;/span&gt; ';
+	}
+	else
+	{
+		$display .= '$'.$this-&gt;name.' ';
+	}
+
+	if ($this-&gt;default)
+	{
+		$display .= '&lt;small&gt;= '.$this-&gt;default.'&lt;/small&gt; ';
+	}
+
+	return $display;
+}</pre>
+	</section>
+</div>
+
+	</section>
+
+	<footer>
+		<p>
+			Documentation generated on January 18th, 2012.
+			Powered by <a href="https://github.com/BGSU-LITS/LiveAPI">LiveAPI</a>.
+		</p>
+	</footer>
+</body>
+</html>
