@@ -46,7 +46,7 @@ class LiveAPI
 		'namespace' => "",
 		'separator' => "\\",
 		'theme' => "default",
-		'title' => "LiveAPI",
+		'title' => "LiveAPI Documentation",
 	);
 
 	/**
